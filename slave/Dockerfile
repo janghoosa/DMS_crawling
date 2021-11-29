@@ -18,15 +18,9 @@ RUN yum -y install nginx
 RUN easy_install-3.6 pip
 RUN pip install beautifulsoup4
 
-VOLUME ["/sys/fs/cgroup"]
-CMD ["/usr/sbin/init"]
-
-# RUN firewall-cmd --permanent --zone=public --add-port=8080/tcp
-# RUN firewall-cmd --reload
-
-# RUN systemctl enable nginx
-# RUN systemctl start nginx
 
 EXPOSE 80
 COPY ./crawller.py ./home/crawller.py
 WORKDIR /home
+
+CMD ["nginx", "-g", "daemon off;"]
