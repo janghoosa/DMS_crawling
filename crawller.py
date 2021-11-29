@@ -16,6 +16,13 @@ bsObject = BeautifulSoup(html, 'html.parser')
 
 # print(os.getcwd()) # os에서 현재 주소를 가져
 
+def createFolder(directory):    # 이미지 저장할 폴더를 생성하는 함수
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print('Error:Creating directory. ' + directory)
+
 def downloadPic(): # 이미지를 다운받는 함수
     n = 1
     for img in bsObject.find_all(name="img",limit=50): # 이미지를 50개 저장하기 위한 반복문
@@ -29,4 +36,5 @@ def downloadPic(): # 이미지를 다운받는 함수
         n += 1
     print('다운로드 완료')
     
+createFolder('img')
 downloadPic()
