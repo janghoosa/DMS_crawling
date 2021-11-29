@@ -1,8 +1,10 @@
-FROM centos/python-36-centos7
+FROM centos:7
 
-RUN mkdir /mydata
-WORKDIR /mydata
+RUN su
+RUN yum -y install epel-release
+RUN yum -y install python3
+RUN yum -y install python-pip
+RUN yum -y install nginx
+RUN easy_install-3.6 pip
 RUN pip install beautifulsoup4
-COPY ./crawller.py ./crawller.py
-
-#CMD python crawller.py
+COPY ./crawller.py ./home/crawller.py
