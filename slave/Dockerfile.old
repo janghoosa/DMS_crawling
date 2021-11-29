@@ -1,4 +1,4 @@
-FROM centos/python-36-centos7
+FROM python:alpine
 
 RUN mkdir /mydata
 WORKDIR /mydata
