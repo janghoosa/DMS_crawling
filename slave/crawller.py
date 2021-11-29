@@ -19,9 +19,9 @@ def downloadPic(): # 이미지를 다운받는 함수
                 img = f.read() #이미지 읽기
                 h.write(img) # 이미지 저장
                 if(n%10==0):
-                    print('%i개 완료'%n)
+                    print('%i Done'%n)
         n += 1
-    print('다운로드 완료')
+    print('Download Complete')
     
 def showListImageSrc():
     for img in bsObject.find_all(name="img",limit=10): 
@@ -33,7 +33,7 @@ baseUrl = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query=' 
 
 while(1):
     #현재는 네이버만 가능
-    plusUrl = input('검색어를 입력하세요 : ') # 검색어 질문
+    plusUrl = input('Input searchword : ') # 검색어 질문
     url = baseUrl + quote_plus(plusUrl) # url로 이동하기위한 쿼리문자열 만들기
 
     print(url)
@@ -42,16 +42,16 @@ while(1):
 
     # print(os.getcwd()) # os에서 현재 주소를 가져옴
     
-    ifDownload = input('다운로드 하시겠습니까? 1 입력시 다운O, 아닐시 다운X')
-    if ifDownload == '1' :
+    ifDownload = input('Do you want to download it? y or n')
+    if ifDownload == 'y' :
         createFolder('img')
         downloadPic()
     
-    ifShowList = input('주소를 보시겠습니까? 1 입력시 출력')
-    if ifShowList == '1' :
+    ifShowList = input('Do you want to see URL? y or n')
+    if ifShowList == 'y' :
         showListImageSrc()
     
-    ifExit = input('종료하시겠습니까? 1 입력시 종료')
-    if ifExit == '1' : 
+    ifExit = input('Are you exit? y or n')
+    if ifExit == 'y' : 
         break
     
