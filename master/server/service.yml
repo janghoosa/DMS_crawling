@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-service
+  labels:
+    app.python.server: service # service의 레이블
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 2222 # service의 port
+    targetPort: 8080 # pod의 target port
+  selector:
+    app.python.server: node # 연결 시킬 pod의 label

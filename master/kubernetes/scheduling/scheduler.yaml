@@ -1,0 +1,9 @@
+apiVersion: kubescheduler.config.k8s.io/v1beta2
+kind: KubeSchedulerConfiguration
+clientConnection:
+  kubeconfig: /etc/srv/kubernets/kube-scheduler/kubeconfig
+profiles:
+  - plugins:
+      score:
+        disabled:
+        - name: PodTopologySpread

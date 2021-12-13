@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.python.server: deployment
+  name: pyhon-server # deployment의 이름
+spec:
+  replicas: 4 # 개체수
+  selector:
+    matchLabels:
+      app.python.server: node # pod의 label을 선택해서 가져오기
+  template:
+    metadata:
+      labels:
+        app.python.server: node # pod의 label을 지정
+    spec:
+      containers:
+        - image: server_flask:0.0.7
+          name: python-server
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /temp
+              name: volume-host
+      volumes: # 참고할 volume 지정
+        - name: volume-host # volume 의 이름 지정
+          hostPath:
+            path: /Users/huisam/volume # volume으로 할 path
+            type: DirectoryOrCreate # type 지정
