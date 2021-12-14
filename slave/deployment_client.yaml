@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: service-mypython
+spec:
+  restartPolicy: Never
+  containers:
+  - name: mypython
+    image: rehoosa/mypython:latest
