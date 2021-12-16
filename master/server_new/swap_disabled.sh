@@ -1,0 +1,1 @@
+swap -a && sed -i '2s/^/#' /etc/fstab
