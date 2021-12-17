@@ -39,7 +39,7 @@ def index():
         for i in range(10):
             urls = urls + st[ind] + '\n'
             ind = ind +1
-        res = requests.get('127.0.0.1:5000/urls' , params = {
+        res = requests.post('127.0.0.1:5000/urls' , params = {
             'urls' : urls
         })
         if ( res == 'Download Complete'):
