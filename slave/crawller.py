@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from urllib.parse import quote_plus
-from flask import Flask
+from flask import Flask, render_template, request
 from bs4 import BeautifulSoup
 import os
 
@@ -112,7 +112,7 @@ def select():
 
 @app.route('/')
 def index():
-    return "Hello!!"
+    return render_template("main.html")
 
 
 @app.route('/post', methods=['GET', 'POST'])
