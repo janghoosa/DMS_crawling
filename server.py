@@ -49,9 +49,9 @@ def index():
     # for i in ret.items:
     #     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
 
-    stream = os.popen('kubectl get pods -l run=mypython -o yaml | grep podIP')
+    stream = os.popen('kubectl get pods -o yaml | grep podIP')
     output = stream.read()
-    ip = output.split(':')[1].replace(' ','')
+    ip = output.split(':')[1].replace(' ','').split('\n')[0]
 
 
     url = "http://"+ip+"/"
