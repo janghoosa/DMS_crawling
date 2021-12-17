@@ -2,6 +2,7 @@ from flask import Flask
 import urllib.request as req
 import requests
 import asyncio
+import os
 
 # app = Flask(__name__)
 url_list : object = ''
@@ -48,7 +49,12 @@ def index():
     # for i in ret.items:
     #     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
 
-    url = "http://127.0.0.1:5000/"
+    stream = os.popen('kubectl get pods -l run=mypython -o yaml | grep podIP')
+    output = stream.read()
+    ip = output.split(':')[1].replace(' ','')
+
+
+    url = "http://"+ip+"/"
 
     word = input('검색어 : ')
     site = input('검색할 사이트( 네이버, bing 중 하나 ) : ')
@@ -85,8 +91,9 @@ def index():
     
     print("[FIN] total : "+total+" images , success download : "+suc)
 
-async def getImage(urls):
-    res = requests.post('127.0.0.1:5000/urls' , params = {
+async def getImage(urls , ip):
+    url = "http://"+ip+"/urls"
+    res = requests.post( url , params = {
             'urls' : urls
         })
 
