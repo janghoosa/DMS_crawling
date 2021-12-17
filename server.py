@@ -42,7 +42,7 @@ def index():
         res = requests.get('127.0.0.1:5000/urls' , params = {
             'urls' : urls
         })
-        if ( res == 'success'):
+        if ( res == 'Download Complete'):
             suc = suc + 10
             print("total : "+total+" images , success download : "+suc +" , failed download : "+fail)
         else:
