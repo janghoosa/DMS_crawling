@@ -1,12 +1,9 @@
 from urllib.request import urlopen
 from urllib.parse import quote_plus
-from flask import Flask
 from bs4 import BeautifulSoup
 import os
 
 LIMIT = 50
-
-app = Flask(__name__)
 
 def createFolder(directory):  # 이미지 저장할 폴더를 생성하는 함수
     try:
@@ -62,63 +59,9 @@ def parseImgUrl(img):
     imgUrl = imgUrl.split('&type')[0]
     return imgUrl
 
-baseUrl1 = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query='  # 네이버 검색url
-baseUrl2 = 'https://www.bing.com/images/search?q=' # bing 검색
-
-def select():
-    while (1):
-        try:
-            url = loadDataFromFile()
-        except :
-            print("no file")
-        # 현재는 네이버만 가능
-            plusUrl = input('Input searchword : ')  # 검색어 질문
-            selectUrl = input('Input url: 1 or 2')
-            if selectUrl == '1':
-                baseUrl = baseUrl1
-            elif selectUrl == '2':
-                baseUrl = baseUrl2
-            else:
-                baseUrl = baseUrl1
-            url = baseUrl + quote_plus(plusUrl)  # url로 이동하기위한 쿼리문자열 만들기
-
-            print(url)
-            html = urlopen(url)  # url 열기
-            bsObject = BeautifulSoup(html, 'html.parser')
-
-        # print(os.getcwd()) # os에서 현재 주소를 가져옴
-
-        ifDownload = input('Do you want to download it? y or n')
-        if ifDownload == 'y':
-            createFolder('img')
-            downloadPic()
-
-        ifShowList = input('Do you want to see URL? y or n')
-        if ifShowList == 'y':
-            showListImageSrc()
-
-        ifSaveList = input('Do you want to save URL? y or n')
-        if ifSaveList == 'y':
-            saveURLtoFile()
-
-        ifExit = input('Are you exit? y or n')
-        if ifExit == 'y':
-            break
-
-@app.route('/')
-def index():
-    return "Hello!!"
-
-@app.route('/get')
 def get():
-    word = request.args.get('word')
-    select = request.args.get('site')
-    if select == 'naver':
-        baseUrl = baseUrl1
-    elif select == 'bing':
-        baseUrl = baseUrl2
-    else:
-        baseUrl = baseUrl1
+    word ='flower' #= request.args.get('word')
+    baseUrl = baseUrl1
     url = baseUrl + quote_plus(word)
     html = urlopen(url)  # url 열기
     bsObject = BeautifulSoup(html, 'html.parser')
@@ -129,5 +72,45 @@ def get():
             res = res + imgUrl + "\n"
     return res
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+baseUrl1 = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query='  # 네이버 검색url
+baseUrl2 = 'https://www.bing.com/images/search?q=' # bing 검색
+
+while (1):
+    try:
+        url = loadDataFromFile()
+    except :
+        print("no file")
+
+        print(get())
+        plusUrl = input('Input searchword : ')  # 검색어 질문
+        selectUrl = input('Input url: 1 or 2')
+        if selectUrl == '1':
+            baseUrl = baseUrl1
+        elif selectUrl == '2':
+            baseUrl = baseUrl2
+        else:
+            baseUrl = baseUrl1
+        url = baseUrl + quote_plus(plusUrl)  # url로 이동하기위한 쿼리문자열 만들기
+
+        print(url)
+        html = urlopen(url)  # url 열기
+        bsObject = BeautifulSoup(html, 'html.parser')
+
+    # print(os.getcwd()) # os에서 현재 주소를 가져옴
+
+    ifDownload = input('Do you want to download it? y or n')
+    if ifDownload == 'y':
+        createFolder('img')
+        downloadPic()
+
+    ifShowList = input('Do you want to see URL? y or n')
+    if ifShowList == 'y':
+        showListImageSrc()
+
+    ifSaveList = input('Do you want to save URL? y or n')
+    if ifSaveList == 'y':
+        saveURLtoFile()
+
+    ifExit = input('Are you exit? y or n')
+    if ifExit == 'y':
+        break
