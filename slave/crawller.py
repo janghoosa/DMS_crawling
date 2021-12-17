@@ -8,6 +8,7 @@ LIMIT = 50
 
 app = Flask(__name__)
 
+
 def createFolder(directory):  # 이미지 저장할 폴더를 생성하는 함수
     try:
         if not os.path.exists(directory):
@@ -41,7 +42,8 @@ def showListImageSrc():
 def saveURLtoFile():
     n = 1
     with open('./' + 'urlList' + '.txt', 'w') as f:
-        for img in bsObject.find_all(name="img", limit=LIMIT):  # 이미지를 50개 저장하기 위한 반복문
+        # 이미지를 50개 저장하기 위한 반복문
+        for img in bsObject.find_all(name="img", limit=LIMIT):
             imgUrl = parseImgUrl(img)
             if "http" in imgUrl:
                 print(imgUrl)
@@ -56,20 +58,23 @@ def loadDataFromFile():
         imgUrl = f.readlines()
         print(imgUrl)
 
+
 def parseImgUrl(img):
     imgUrl = img['src']
     imgUrl = imgUrl.split('?w=')[0]
     imgUrl = imgUrl.split('&type')[0]
     return imgUrl
 
+
 baseUrl1 = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query='  # 네이버 검색url
-baseUrl2 = 'https://www.bing.com/images/search?q=' # bing 검색
+baseUrl2 = 'https://www.bing.com/images/search?q='  # bing 검색
+
 
 def select():
     while (1):
         try:
             url = loadDataFromFile()
-        except :
+        except:
             print("no file")
             plusUrl = input('Input searchword : ')  # 검색어 질문
             selectUrl = input('Input url: 1 or 2')
@@ -104,13 +109,15 @@ def select():
         if ifExit == 'y':
             break
 
+
 @app.route('/')
 def index():
     return "Hello!!"
 
-@app.route('/get')
-def get():
-    print("get")
+
+@app.route('/post', methods=['GET', 'POST'])
+def post():
+    print("post")
     word = request.args.get('word')
     site = request.args.get('site')
     if site == 'naver':
@@ -122,16 +129,17 @@ def get():
     url = baseUrl + quote_plus(word)
     html = urlopen(url)  # url 열기
     bsObject = BeautifulSoup(html, 'html.parser')
-    res : object = ''
+    res: object = ''
     for img in bsObject.find_all(name="img", limit=LIMIT):
         imgUrl = parseImgUrl(img)
         if "http" in imgUrl:
             res = res + imgUrl + "\n"
     return res
 
-@app.route('/get/url')
+
+@app.route('/post/url', methods=['GET', 'POST'])
 def download():
-    print("/get/url/")
+    print("/post/url/")
     UrlListGet = request.args.get('url')
     n = 0
     for url in UrlListGet:
@@ -145,6 +153,7 @@ def download():
         n += 1
     print('Download Complete')
     return "Download Complete"
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
