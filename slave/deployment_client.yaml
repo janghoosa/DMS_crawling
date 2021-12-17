@@ -19,16 +19,3 @@ spec:
         ports:
           - containerPort: 5000
             name: flask
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mypython-svc
-spec:
-  selector:
-      name: mypython
-  ports:
-    - name: service
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
