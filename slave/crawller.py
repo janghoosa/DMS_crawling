@@ -3,7 +3,6 @@ from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 import os
 
-
 def createFolder(directory):  # 이미지 저장할 폴더를 생성하는 함수
     try:
         if not os.path.exists(directory):
@@ -44,16 +43,26 @@ def saveURLtoFile():
             n += 1
 
 
+def loadDataFromFile():
+    with open('/resUrlList.txt', 'r') as f:
+        imgUrl = f.readlines()
+        print(imgUrl)
+
+
 baseUrl = 'https://search.naver.com/search.naver?where=image&sm=tab_jum&query='  # 네이버 검색url
 
 while (1):
+    try:
+        url = loadDataFromFile()
+    except :
+        print("no file")
     # 현재는 네이버만 가능
-    plusUrl = input('Input searchword : ')  # 검색어 질문
-    url = baseUrl + quote_plus(plusUrl)  # url로 이동하기위한 쿼리문자열 만들기
+        plusUrl = input('Input searchword : ')  # 검색어 질문
+        url = baseUrl + quote_plus(plusUrl)  # url로 이동하기위한 쿼리문자열 만들기
 
-    print(url)
-    html = urlopen(url)  # url 열기
-    bsObject = BeautifulSoup(html, 'html.parser')
+        print(url)
+        html = urlopen(url)  # url 열기
+        bsObject = BeautifulSoup(html, 'html.parser')
 
     # print(os.getcwd()) # os에서 현재 주소를 가져옴
 
