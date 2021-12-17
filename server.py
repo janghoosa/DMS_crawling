@@ -48,7 +48,7 @@ def index():
     # for i in ret.items:
     #     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
 
-    url = "127.0.0.1:5000/"
+    url = "http://127.0.0.1:5000/"
 
     word = input('검색어 : ')
     site = input('검색할 사이트( 네이버, bing 중 하나 ) : ')
