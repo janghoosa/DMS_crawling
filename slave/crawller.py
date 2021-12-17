@@ -71,7 +71,6 @@ def select():
             url = loadDataFromFile()
         except :
             print("no file")
-        # 현재는 네이버만 가능
             plusUrl = input('Input searchword : ')  # 검색어 질문
             selectUrl = input('Input url: 1 or 2')
             if selectUrl == '1':
@@ -112,10 +111,10 @@ def index():
 @app.route('/get')
 def get():
     word = request.args.get('word')
-    select = request.args.get('site')
-    if select == 'naver':
+    site = request.args.get('site')
+    if site == 'naver':
         baseUrl = baseUrl1
-    elif select == 'bing':
+    elif site == 'bing':
         baseUrl = baseUrl2
     else:
         baseUrl = baseUrl1
