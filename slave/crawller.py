@@ -110,6 +110,7 @@ def index():
 
 @app.route('/get')
 def get():
+    print("get")
     word = request.args.get('word')
     site = request.args.get('site')
     if site == 'naver':
@@ -127,6 +128,23 @@ def get():
         if "http" in imgUrl:
             res = res + imgUrl + "\n"
     return res
+
+@app.route('/get/url')
+def download():
+    print("/get/url/")
+    UrlListGet = request.args.get('url')
+    n = 0
+    for url in UrlListGet:
+        if "http" in url:
+            with urlopen(url) as f:
+                with open('./img/' + plusUrl + str(n) + '.jpg', 'wb') as h:  # 이미지 + 사진번호 + 확장자는 jpg
+                    img = f.read()  # 이미지 읽기
+                    h.write(img)  # 이미지 저장
+                    if (n % 10 == 0):
+                        print('%i Done' % n)
+        n += 1
+    print('Download Complete')
+    return "Download Complete"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
